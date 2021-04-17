@@ -25,8 +25,8 @@ function main() {
 }
 }
 
-app.post('upload', function(req, res) {
-	console.log(req)
+app.post('/upload', function(req, res) {
+	console.log(req);
 });
 
 app.listen(8080);
