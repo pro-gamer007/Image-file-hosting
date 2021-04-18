@@ -17,9 +17,14 @@ function main() {
 	const Files = fs.readdirSync('./public/Images/');
 	console.log('Reloaded')
 	for (const file of Files) {
+		let filetype = 'img';
 		const filename = file.split('.')[0];
+		const fileending = file.split('.')[1];
+		if (fileending == 'mp4' || fileending == 'mov') {
+			filetype = 'vid'
+		}
 		app.get(`/${filename}`, function (req, res) {
-			res.render("Base", {
+			res.render(`Base${filetype}`, {
 				file: file
 			})
 		});
@@ -29,7 +34,7 @@ function main() {
 app.post('/upload', function (req, res) {
 	const rkey = process.env.key;
 	const key = req.query.key;
-	if (key == rkey) {
+	if (!key == rkey) {
 		res.status(401);
 		return res.send('Give a valid key bruh.');
 	}
@@ -40,5 +45,5 @@ app.post('/upload', function (req, res) {
 	return res.send(url);
 });
 
-app.listen(8080);
+app.listen(80);
 console.log('Server is now ready!');
