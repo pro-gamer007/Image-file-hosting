@@ -25,7 +25,8 @@ function main() {
 		}
 		app.get(`/${filename}`, function (req, res) {
 			res.render(`Base${filetype}`, {
-				file: file
+				file: file,
+				ending: fileending
 			})
 		});
 	}
