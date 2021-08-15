@@ -8,31 +8,32 @@ app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(fileUpload({
 	safeFileNames: true,
-	preserveExtension: true
+	preserveExtension: true,
 }));
 
-const reload = setInterval(function () { main() }, 2000);
+// eslint-disable-next-line no-unused-vars
+const reload = setInterval(function() { main(); }, 2000);
 
 function main() {
 	const Files = fs.readdirSync('./public/Images/');
-	console.log('Reloaded')
+	console.log('Reloaded');
 	for (const file of Files) {
 		let filetype = 'img';
 		const filename = file.split('.')[0];
 		const fileending = file.split('.')[1];
 		if (fileending == 'mp4' || fileending == 'mov') {
-			filetype = 'vid'
+			filetype = 'vid';
 		}
-		app.get(`/${filename}`, function (req, res) {
+		app.get(`/${filename}`, function(req, res) {
 			res.render(`Base${filetype}`, {
 				file: file,
-				ending: fileending
-			})
+				ending: fileending,
+			});
 		});
 	}
 }
 
-app.post('/upload', function (req, res) {
+app.post('/upload', function(req, res) {
 	const rkey = process.env.key;
 	const key = req.query.key;
 	if (!key == rkey) {
