@@ -11,10 +11,12 @@ app.use(fileUpload({
 	preserveExtension: true,
 }));
 
-// eslint-disable-next-line no-unused-vars
-const reload = setInterval(function() { main(); }, 2000);
+setInterval(() => {
+	reload();
+}, 1800000);
+reload();
 
-function main() {
+function reload() {
 	const Files = fs.readdirSync('./public/Images/');
 	console.log('Reloaded');
 	for (const file of Files) {
@@ -44,6 +46,7 @@ app.post('/upload', function(req, res) {
 	const filename = file.name;
 	const url = filename.split('.')[0];
 	file.mv(`public/Images/${filename}`);
+	reload();
 	return res.send(url);
 });
 
